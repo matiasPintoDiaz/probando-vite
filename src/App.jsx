@@ -3,16 +3,16 @@ import "./App.css";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [pokemons, setPokemons] = useState([]);
+  const [pokemons, setPokemons] = useState("");
 
   useEffect(() => {
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=2&offset=0') // https://pokeapi.co/api/v2/pokemon?limit=20&offset=0
+    fetch(`https://pokeapi.co/api/v2/pokemon/${count}/`) // https://pokeapi.co/api/v2/pokemon?limit=20&offset=0
       .then(response => response.json())
       .then(pokemons => {
-        console.log(pokemons.results)
-        setPokemons(pokemons.results)
+        console.log(pokemons)
+        setPokemons(pokemons)
       })
-  }, []);
+  }, [count]);
 
   /* useEffect(() => {
     fetch('')
@@ -26,12 +26,14 @@ function App() {
       <div className="card">
         <p>App simple para probar Vite (Poke API)</p>
         <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+          Pokemon número: {count}
         </button>
         <br />
-        <button onClick={() => getApi()}>
-          Haz Click aquí!
-        </button>
+        <div>
+          {count && <p>Messages: {count}</p>}
+          {pokemons && <p>{pokemons.name}</p>}
+          {pokemons && <img src={pokemons.sprites.front_default} className="" alt="imagen-pokemon" />}
+        </div>
       </div>
     </div>
   );
