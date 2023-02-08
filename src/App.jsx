@@ -7,33 +7,43 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
+const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/'
+
 function App() {
   const [count, setCount] = useState(0);
   const [pokemons, setPokemons] = useState("");
 
-  useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${count}/`)
+  const getDataPokemon = () => {
+    fetch(`${BASE_URL}${count}`)
       .then((response) => response.json())
       .then((pokemons) => {
-        console.log(pokemons);
         setPokemons(pokemons);
+        // console.log(pokemons);
       });
-  }, [count]);
+  }
+
+  /* useEffect(() => {
+    getDataPokemon();
+  }, [count]); */
+  useEffect(getDataPokemon, [count]);
 
   return (
     <div className="App">
       <h1>Poke API</h1>
       <div className="card">
         <p>
-          App simple para probar
+          App simple para probar{" "}
           <a href="https://vitejs.dev/" target="_blank">
             Vite
-          </a>
+          </a>{" "}
           Poke API
         </p>
         <button onClick={() => setCount((count) => count + 1)}>
           Pokemon número: {count}
         </button>
+{/*         <button onClick={handleClick}>
+          Pokemon númeroeewwe: {count}
+        </button> */}
         <br />
         <br />
         <div>
