@@ -7,25 +7,30 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
-const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/'
+import { getDataPokemon } from './hooks/dataPokemon';
 
 function App() {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
   const [pokemons, setPokemons] = useState("");
 
-  const getDataPokemon = () => {
+  /* const getDataPokemon = () => {
     fetch(`${BASE_URL}${count}`)
       .then((response) => response.json())
       .then((pokemons) => {
         setPokemons(pokemons);
         // console.log(pokemons);
       });
-  }
+  } */
 
   /* useEffect(() => {
-    getDataPokemon();
-  }, [count]); */
-  useEffect(getDataPokemon, [count]);
+    const pokemon = getDataPokemon();
+    setPokemons(pokemon);
+  }, []); */
+
+  const handleClick = async() => {
+    const pokemon = await getDataPokemon();
+    setPokemons(pokemon);
+  }
 
   return (
     <div className="App">
@@ -38,12 +43,9 @@ function App() {
           </a>{" "}
           Poke API
         </p>
-        <button onClick={() => setCount((count) => count + 1)}>
-          Pokemon número: {count}
+        <button onClick={handleClick}>
+          Click para mostrar un Pokemon al azar!
         </button>
-{/*         <button onClick={handleClick}>
-          Pokemon númeroeewwe: {count}
-        </button> */}
         <br />
         <br />
         <div>
