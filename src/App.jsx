@@ -7,29 +7,18 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
-import { getDataPokemon } from './hooks/dataPokemon';
+import { getRandomPokemon } from './hooks/dataPokemon';
 
 function App() {
-  // const [count, setCount] = useState(0);
-  const [pokemons, setPokemons] = useState("");
+  const [pokemon, setPokemon] = useState("");
 
-  /* const getDataPokemon = () => {
-    fetch(`${BASE_URL}${count}`)
-      .then((response) => response.json())
-      .then((pokemons) => {
-        setPokemons(pokemons);
-        // console.log(pokemons);
-      });
-  } */
-
-  /* useEffect(() => {
-    const pokemon = getDataPokemon();
-    setPokemons(pokemon);
-  }, []); */
+  useEffect(() => {
+    getRandomPokemon().then(setPokemon)
+  }, []);
 
   const handleClick = async() => {
-    const pokemon = await getDataPokemon();
-    setPokemons(pokemon);
+    const pokemon = await getRandomPokemon();
+    setPokemon(pokemon);
   }
 
   return (
@@ -49,19 +38,19 @@ function App() {
         <br />
         <br />
         <div>
-          {pokemons && (
+          {pokemon && (
             <CardActionArea>
               <Card sx={{ maxWidth: 345 }} className="card">
                 <CardMedia
                   component="img"
                   height="280"
-                  image={pokemons.sprites.front_default}
+                  image={pokemon.sprites.front_default}
                   alt="imagen pokemon"
                   className="pokemon-card"
                 />
                 <CardContent className="pokemon-card">
                   <Typography gutterBottom variant="h5" component="div">
-                    {pokemons.name}
+                    {pokemon.name}
                   </Typography>
                 </CardContent>
               </Card>
